@@ -13,6 +13,11 @@ import { createInMemoryTeacherRepository } from './repositories/teacherRepositor
 import { createTeacherService } from './services/teacherService';
 import { createTeacherController } from './controllers/teacherController';
 import { createTeacherRoutes } from './routes/teacherRoutes';
+import { EnrollmentRepository } from './repositories/enrollmentRepository';
+import { PaymentRepository } from './repositories/paymentRepository';
+import { EnrollmentService } from './services/enrollmentService';
+import { EnrollmentController } from './controllers/enrollmentController';
+import { createEnrollmentRoutes } from './routes/enrollmentRoutes';
 
 const PORT = process.env.PORT || 8000;
 const DATABASE_PATH = process.env.DATABASE_PATH || '../data/courses.db';
@@ -69,9 +74,16 @@ const setupApplication = (connection: any) => {
   const teacherService = createTeacherService(teacherRepository);
   const teacherController = createTeacherController(teacherService);
 
+  // Create enrollment and payment application layers
+  const enrollmentRepository = new EnrollmentRepository(connection.db);
+  const paymentRepository = new PaymentRepository(connection.db);
+  const enrollmentService = new EnrollmentService(enrollmentRepository, paymentRepository);
+  const enrollmentController = new EnrollmentController(enrollmentService);
+
   // Setup routes
   app.use('/api/courses', createCourseRoutes(courseController));
   app.use('/api/teachers', createTeacherRoutes(teacherController));
+  app.use('/api', createEnrollmentRoutes(enrollmentController));
 
   return app;
 };
@@ -87,6 +99,8 @@ const startServer = (app: express.Application) =>
           console.log(`Images: http://localhost:${PORT}/images`);
           console.log(`Teacher API: http://localhost:${PORT}/api/teachers`);
           console.log(`Course API: http://localhost:${PORT}/api/courses`);
+          console.log(`Enrollment API: http://localhost:${PORT}/api/enrollments`);
+          console.log(`Payment API: http://localhost:${PORT}/api/payments`);
           resolve();
         });
 

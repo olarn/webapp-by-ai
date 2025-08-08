@@ -6,4 +6,12 @@
   4.2 Short background.
   4.3 Portrait.
   4.4 Specialties.
-5. 4. As a Student. I want to see teacher profile from course list (home).
+5. As a Student. I want to see teacher profile from course list (home).
+
+6. As a Student. I want to click enroll button in the course detail page. So that I can see the register class page and I can fill my personal information.
+7. As a Student. I want to click payment button. So that I can go to payment screen with QR code.
+  7.1 The payment screen show payment and payee information.
+  7.2 The payment screen use mock payment gateway.
+  7.3 The payment screen has paid button to simulated payment success action.
+  7.4 Web app will success dialog. Click ok on dialog will navigate to home screen.   
+  7.5 Web app will save registered data and payment transaction into the database.

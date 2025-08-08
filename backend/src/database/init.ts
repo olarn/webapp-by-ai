@@ -1,6 +1,7 @@
 import * as TE from 'fp-ts/TaskEither';
 import { pipe } from 'fp-ts/function';
 import { DatabaseConnection, runQuery } from './connection';
+import { migrate } from './migrate';
 
 export const initializeDatabase = (
   connection: DatabaseConnection
@@ -60,6 +61,15 @@ export const initializeDatabase = (
       runQuery(
         connection,
         'CREATE INDEX IF NOT EXISTS idx_teachers_email ON teachers (email)'
+      )
+    ),
+    TE.chain(() =>
+      // Run enrollment and payment migration
+      TE.tryCatch(
+        async () => {
+          await migrate(connection.db);
+        },
+        (error) => new Error(`Migration failed: ${error}`)
       )
     )
   );

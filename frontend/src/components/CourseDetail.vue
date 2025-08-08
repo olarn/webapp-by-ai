@@ -88,7 +88,10 @@
                 </div>
               </div>
 
-              <button class="w-full btn-primary text-lg py-3">
+              <button 
+                @click="showEnrollmentForm = true"
+                class="w-full btn-primary text-lg py-3"
+              >
                 Enroll Now
               </button>
             </div>
@@ -157,6 +160,22 @@
         </div>
       </div>
     </div>
+
+    <!-- Enrollment Form Modal -->
+    <EnrollmentForm
+      v-if="showEnrollmentForm"
+      :course="course"
+      @close="closeEnrollmentForm"
+      @proceed-to-payment="handleEnrollmentSubmit"
+    />
+
+    <!-- Payment Screen Modal -->
+    <PaymentScreen
+      v-if="showPaymentScreen && enrollmentData"
+      :course="course"
+      :enrollment-data="enrollmentData"
+      @close="closePaymentScreen"
+    />
   </div>
 </template>
 
@@ -166,6 +185,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { courseApi, teacherApi } from '../services/api';
 import { imageCache } from '../services/imageCache';
 import TeacherProfile from './TeacherProfile.vue';
+import EnrollmentForm from './EnrollmentForm.vue';
+import PaymentScreen from './PaymentScreen.vue';
 import type { Course, Teacher } from '../types/course';
 
 const router = useRouter();
@@ -174,6 +195,9 @@ const course = ref<Course | null>(null);
 const teacher = ref<Teacher | null>(null);
 const loading = ref(true);
 const error = ref<string | null>(null);
+const showEnrollmentForm = ref(false);
+const showPaymentScreen = ref(false);
+const enrollmentData = ref<any>(null);
 
 const courseId = parseInt(route.params.id as string);
 
@@ -227,6 +251,21 @@ const formatDate = (dateString: string) => {
     month: 'long',
     day: 'numeric'
   });
+};
+
+const handleEnrollmentSubmit = (data: any) => {
+  enrollmentData.value = data;
+  showEnrollmentForm.value = false;
+  showPaymentScreen.value = true;
+};
+
+const closeEnrollmentForm = () => {
+  showEnrollmentForm.value = false;
+};
+
+const closePaymentScreen = () => {
+  showPaymentScreen.value = false;
+  enrollmentData.value = null;
 };
 
 onMounted(() => {
