@@ -1,0 +1,51 @@
+<svg width="400" height="225" viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="225" fill="#F3F4F6"/>
+  
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="mobileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main container -->
+  <rect x="50" y="40" width="300" height="145" rx="8" fill="url(#mobileGradient)" opacity="0.9"/>
+  
+  <!-- Phone outline -->
+  <rect x="120" y="70" width="160" height="105" rx="20" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+  
+  <!-- Screen -->
+  <rect x="130" y="80" width="140" height="85" rx="12" fill="#1F2937"/>
+  
+  <!-- App icons grid -->
+  <rect x="140" y="90" width="25" height="25" rx="5" fill="#3B82F6"/>
+  <rect x="170" y="90" width="25" height="25" rx="5" fill="#10B981"/>
+  <rect x="200" y="90" width="25" height="25" rx="5" fill="#F59E0B"/>
+  <rect x="230" y="90" width="25" height="25" rx="5" fill="#EF4444"/>
+  
+  <rect x="140" y="120" width="25" height="25" rx="5" fill="#8B5CF6"/>
+  <rect x="170" y="120" width="25" height="25" rx="5" fill="#06B6D4"/>
+  <rect x="200" y="120" width="25" height="25" rx="5" fill="#84CC16"/>
+  <rect x="230" y="120" width="25" height="25" rx="5" fill="#F97316"/>
+  
+  <rect x="140" y="150" width="25" height="25" rx="5" fill="#EC4899"/>
+  <rect x="170" y="150" width="25" height="25" rx="5" fill="#6366F1"/>
+  <rect x="200" y="150" width="25" height="25" rx="5" fill="#14B8A6"/>
+  <rect x="230" y="150" width="25" height="25" rx="5" fill="#F43F5E"/>
+  
+  <!-- Home button -->
+  <circle cx="200" cy="165" r="8" fill="#E5E7EB"/>
+  
+  <!-- React Native logo -->
+  <circle cx="320" cy="100" r="15" fill="#61DAFB"/>
+  <text x="320" y="105" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8" font-weight="bold">RN</text>
+  
+  <!-- Mobile icon -->
+  <circle cx="320" cy="130" r="12" fill="#10B981"/>
+  <rect x="315" y="125" width="10" height="15" rx="2" fill="white"/>
+  <circle cx="320" cy="130" r="2" fill="#10B981"/>
+  
+  <!-- Text -->
+  <text x="200" y="200" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Mobile Development</text>
+</svg>

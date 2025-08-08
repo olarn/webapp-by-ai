@@ -1,0 +1,23 @@
+I want a Website project code that implement with this layer... 
+- Front end
+    - Vue.JS
+    - Tailwind CSS
+    - Unit tests with Jest
+    - Support web responsive.
+- Backend 
+    - implement with functional programming style
+    - NodeJS, Express
+    - language: Typescript
+    - typescript library: fp-ts 
+    - Unit tests with Jest
+- Database
+    - Sqlite
+
+Requirements:
+- Full web application that can show list of offline course. For example :- Functional Programming, OOP, DevOps with K8S. When user click on  
+- Web application has 2 user roles
+    - Student
+    - Teacher
+  - I prefered web look and feels like @https://www.udemy.com  
+
+The result of the project should have all front end and back end source code that can run with 

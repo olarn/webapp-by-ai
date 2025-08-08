@@ -1,0 +1,54 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="objectGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffecd2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fcb69f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- Main Object Box -->
+  <rect x="100" y="80" width="200" height="120" rx="15" fill="url(#objectGradient)" stroke="#fff" stroke-width="3"/>
+  
+  <!-- Object Title -->
+  <text x="200" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Class</text>
+  
+  <!-- Properties -->
+  <rect x="110" y="115" width="180" height="25" rx="5" fill="#fff" opacity="0.8"/>
+  <text x="120" y="132" font-family="monospace" font-size="12" fill="#333">- name: string</text>
+  
+  <rect x="110" y="145" width="180" height="25" rx="5" fill="#fff" opacity="0.8"/>
+  <text x="120" y="162" font-family="monospace" font-size="12" fill="#333">- age: number</text>
+  
+  <!-- Methods -->
+  <rect x="110" y="175" width="180" height="25" rx="5" fill="#e8f4fd" opacity="0.9"/>
+  <text x="120" y="192" font-family="monospace" font-size="12" fill="#333">+ getName(): string</text>
+  
+  <!-- Inheritance Arrow -->
+  <line x1="200" y1="220" x2="200" y2="240" stroke="#fff" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Child Object -->
+  <rect x="150" y="250" width="100" height="30" rx="10" fill="#ff9a9e" stroke="#fff" stroke-width="2"/>
+  <text x="200" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff">Instance</text>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fff"/>
+    </marker>
+  </defs>
+  
+  <!-- Decorative elements -->
+  <circle cx="50" cy="50" r="8" fill="#fff" opacity="0.3"/>
+  <circle cx="350" cy="80" r="12" fill="#fff" opacity="0.2"/>
+  <circle cx="320" cy="250" r="6" fill="#fff" opacity="0.4"/>
+  
+  <!-- OOP Text -->
+  <text x="200" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#fff">OOP</text>
+</svg>

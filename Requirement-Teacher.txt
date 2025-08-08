@@ -1,0 +1,7 @@
+1. As a teacher, I want to login to the web teacher area. So that I can see teacher functionality.
+2. As a teacher, I want to create course. So that the new course I created will show in the course list.
+3. As a teacher, I want to see list of my courses that I created.
+4. As a teacher, I want to search my courses by enter keyworlds. So that I can see my coursses in the search result.
+5. As a teacher, I want to be able to update my couses that other teachers cannot see.
+6. As a teacher, I want to disable my courses. So that the course I disabled will not show on public.
+7. As a teacher, I want to be able to delete course.

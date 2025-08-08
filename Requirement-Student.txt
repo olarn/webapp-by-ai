@@ -1,0 +1,9 @@
+1. As a Student, I can see list of course on home screen. So that I can see and scroll page with lazy load.
+2. As a Student, I can click on the course name or image. So that the web app will navigate to the Course detail page  to see more course details.
+3. As a Student. I can click on back button in course details page. So that the web app will navigate back to Course list page.
+4. As a Student. I want to see teacher profile from course details page.
+  4.1 Name.
+  4.2 Short background.
+  4.3 Portrait.
+  4.4 Specialties.
+5. 4. As a Student. I want to see teacher profile from course list (home).

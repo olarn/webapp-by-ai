@@ -1,0 +1,50 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      - DATABASE_PATH=/app/data/courses.db
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - database
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  database:
+    image: alpine:latest
+    volumes:
+      - ./data:/data
+    command: sh -c "apk add --no-cache sqlite && sqlite3 /data/courses.db 'CREATE TABLE IF NOT EXISTS courses (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, image_url TEXT, instructor TEXT, price REAL, category TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP);' && sqlite3 /data/courses.db 'INSERT OR IGNORE INTO courses (id, title, description, image_url, instructor, price, category) VALUES (1, \"Functional Programming Fundamentals\", \"Learn the core concepts of functional programming including pure functions, immutability, and higher-order functions.\", \"/images/fp-course.jpg\", \"Dr. John Smith\", 49.99, \"Programming\"), (2, \"Object-Oriented Programming Mastery\", \"Master OOP principles including encapsulation, inheritance, and polymorphism with practical examples.\", \"/images/oop-course.jpg\", \"Prof. Sarah Johnson\", 59.99, \"Programming\"), (3, \"DevOps with Kubernetes\", \"Learn containerization, orchestration, and deployment strategies with Kubernetes.\", \"/images/devops-course.jpg\", \"Mike Chen\", 79.99, \"DevOps\");'"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  data:
