@@ -9,6 +9,8 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "migrate": "ts-node src/database/migrate.ts",
     "seed": "ts-node src/database/seed-courses.ts",
+    "seed:admin": "ts-node src/database/seed-admin.ts",
+    "seed:analytics": "ts-node src/database/seed-analytics.ts",
     "test": "jest",
     "test:watch": "jest --watch"
   },

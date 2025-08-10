@@ -63,16 +63,14 @@
           <div class="text-center">
             <h4 class="font-semibold text-gray-900 mb-3">Scan QR Code to Pay</h4>
             <div class="bg-white border-2 border-gray-200 rounded-lg p-4 inline-block">
-              <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-                <div class="text-center">
-                  <div class="w-32 h-32 bg-gray-300 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                    <svg class="w-16 h-16 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                  </div>
-                  <p class="text-xs text-gray-600">Mock QR Code</p>
-                  <p class="text-xs text-gray-500 mt-1">${{ course?.price }}</p>
-                </div>
+              <div class="w-48 h-48 bg-white rounded-lg flex items-center justify-center">
+                <img
+                  v-if="qrDataUrl"
+                  :src="qrDataUrl"
+                  alt="Payment QR Code"
+                  class="w-48 h-48 object-contain"
+                />
+                <div v-else class="w-32 h-32 bg-gray-200 animate-pulse rounded"></div>
               </div>
             </div>
             <p class="text-sm text-gray-600 mt-2">
@@ -168,10 +166,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { enrollmentService } from '../services/enrollmentService';
 import type { Course } from '../types/course';
+import QRCode from 'qrcode';
 
 interface EnrollmentData {
   firstName: string;
@@ -198,6 +197,34 @@ const router = useRouter();
 const processing = ref(false);
 const showSuccessDialog = ref(false);
 const selectedPaymentMethod = ref<'qr' | 'credit' | 'bank'>('qr');
+
+// Generate a stable reference for the current session/modal open
+const fixedRef = ref<string>(Date.now().toString().slice(-6));
+const qrDataUrl = ref<string>('');
+
+const qrPayload = computed(() => {
+  const payload = {
+    payee: 'Course Platform Inc.',
+    account: '1234-5678-9012-3456',
+    currency: 'USD',
+    amount: props.course?.price ?? 0,
+    reference: `ENR-${props.enrollmentData.courseId}-${fixedRef.value}`,
+    course: props.course?.title ?? 'Unknown Course'
+  };
+  return JSON.stringify(payload);
+});
+
+watch(qrPayload, async (value) => {
+  try {
+    qrDataUrl.value = await QRCode.toDataURL(value, {
+      width: 192,
+      margin: 1,
+      color: { dark: '#000000', light: '#ffffff' }
+    });
+  } catch (e) {
+    qrDataUrl.value = '';
+  }
+}, { immediate: true });
 
 const selectPaymentMethod = (method: 'qr' | 'credit' | 'bank') => {
   selectedPaymentMethod.value = method;

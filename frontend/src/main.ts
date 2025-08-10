@@ -9,12 +9,22 @@ import CourseDetail from './components/CourseDetail.vue';
 import TeacherLogin from './components/TeacherLogin.vue';
 import TeacherRegister from './components/TeacherRegister.vue';
 import TeacherDashboard from './components/TeacherDashboard.vue';
+import AdminLogin from './components/AdminLogin.vue';
+import AdminDashboard from './components/AdminDashboard.vue';
 
 // Auth guard function
 const requireAuth = () => {
   const teacherId = localStorage.getItem('teacherId');
   if (!teacherId) {
     return '/teacher/login';
+  }
+  return true;
+};
+
+const requireAdmin = () => {
+  const adminId = localStorage.getItem('adminId');
+  if (!adminId) {
+    return '/admin/login';
   }
   return true;
 };
@@ -27,6 +37,17 @@ const router = createRouter({
       path: '/',
       name: 'CourseList',
       component: CourseList
+    },
+    {
+      path: '/admin/login',
+      name: 'AdminLogin',
+      component: AdminLogin
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'AdminDashboard',
+      component: AdminDashboard,
+      beforeEnter: requireAdmin
     },
     {
       path: '/course/:id',

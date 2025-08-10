@@ -18,6 +18,12 @@ import { PaymentRepository } from './repositories/paymentRepository';
 import { EnrollmentService } from './services/enrollmentService';
 import { EnrollmentController } from './controllers/enrollmentController';
 import { createEnrollmentRoutes } from './routes/enrollmentRoutes';
+import { AdminService } from './services/adminService';
+import { AdminController } from './controllers/adminController';
+import { createAdminRoutes } from './routes/adminRoutes';
+import { AdminAuthController } from './controllers/adminAuthController';
+import { createAdminAuthRoutes } from './routes/adminAuthRoutes';
+import { AdminRepository } from './repositories/adminRepository';
 
 const PORT = process.env.PORT || 8000;
 const DATABASE_PATH = process.env.DATABASE_PATH || '../data/courses.db';
@@ -84,6 +90,14 @@ const setupApplication = (connection: any) => {
   app.use('/api/courses', createCourseRoutes(courseController));
   app.use('/api/teachers', createTeacherRoutes(teacherController));
   app.use('/api', createEnrollmentRoutes(enrollmentController));
+
+  // Admin
+  const adminService = new AdminService(connection.db);
+  const adminController = new AdminController(adminService);
+  const adminRepository = new AdminRepository(connection.db);
+  const adminAuthController = new AdminAuthController(adminRepository);
+  app.use('/api/admin', createAdminRoutes(adminController));
+  app.use('/api/admin', createAdminAuthRoutes(adminAuthController));
 
   return app;
 };

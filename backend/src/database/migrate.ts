@@ -36,6 +36,18 @@ export const migrate = async (db: Database): Promise<void> => {
     )
   `);
 
+  // Create admins table
+  await run(`
+    CREATE TABLE IF NOT EXISTS admins (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      password_hash TEXT NOT NULL,
+      password_salt TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
   // Create enrollments table
   await run(`
     CREATE TABLE IF NOT EXISTS enrollments (
