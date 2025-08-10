@@ -286,15 +286,13 @@ main() {
         fi
     fi
     
-    # Note: Don't auto-cleanup servers when using UI mode
-    # Let the user control when to stop them
+    # Cleanup - stop servers like run-ui-tests
     echo ""
-    print_warning "⚠️  Servers are still running for interactive testing."
-    print_warning "Use 'npm run start:servers' to stop them when you're done."
-    print_warning "Or run this script again to restart the workflow."
+    print_status "Cleaning up servers..."
+    stop_servers
     
     echo ""
-    print_success "Workflow completed! Playwright UI mode is ready for interactive testing."
+    print_success "Workflow completed!"
 }
 
 # Run main function
