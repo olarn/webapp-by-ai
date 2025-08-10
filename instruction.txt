@@ -1,0 +1,6 @@
+1. Read provided requirement and in struction (this file).
+2. Add requested features. Refactor code and/or restructure database if needed.
+3. Test server (node) and client (Vue).
+4. Add UI tests to cover happy path features. No smoke test. 
+5. Run UI automate test to make sure everything passed.
+6. Update all scripts.

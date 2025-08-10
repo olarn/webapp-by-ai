@@ -153,7 +153,7 @@
     </section>
 
     <!-- Empty State -->
-    <div v-if="!loading && !error && filteredCourses.length === 0" class="text-center py-12" role="status" aria-live="polite">
+    <div v-if="!loading && !error && ((filteredCourses && filteredCourses.length) || 0) === 0" class="text-center py-12" role="status" aria-live="polite">
       <div v-if="searchQuery" class="text-gray-500 text-lg">
         No courses found matching "{{ searchQuery }}". Try a different search term.
       </div>
