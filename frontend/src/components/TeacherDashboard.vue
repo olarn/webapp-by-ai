@@ -248,14 +248,12 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { courseApi } from '../services/api';
 import { imageCache } from '../services/imageCache';
 import { useAuth } from '@/composables/useAuth';
 import type { Course } from '../types/course';
 import CourseModal from './CourseModal.vue';
 
-const router = useRouter();
 const courses = ref<Course[]>([]);
 const loading = ref(true);
 const error = ref<string | null>(null);
@@ -367,6 +365,7 @@ onMounted(() => {
 <style scoped>
 .line-clamp-2 {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -374,6 +373,7 @@ onMounted(() => {
 
 .line-clamp-3 {
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
