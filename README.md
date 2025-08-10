@@ -241,7 +241,7 @@ npm run test:e2e:webkit
 npm run test:e2e:report
 ```
 
-For detailed E2E testing information, see [ui-tests/README.md](ui-tests/README.md).
+For detailed E2E testing information, see [playwright/README.md](playwright/README.md).
 
 ## Development
 

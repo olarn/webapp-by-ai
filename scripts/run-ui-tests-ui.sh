@@ -98,9 +98,18 @@ cleanup_test_results() {
         print_success "  .last-run.json file removed"
     fi
     
-    # Remove any test artifacts in ui-tests directory
+    # Remove any test artifacts in playwright directory
+    if [ -d "playwright" ]; then
+        print_status "  Cleaning playwright directory..."
+        find playwright -name "*.log" -delete 2>/dev/null || true
+        find playwright -name "*.tmp" -delete 2>/dev/null || true
+        find playwright -name "*.cache" -delete 2>/dev/null || true
+        echo "  ✅ playwright directory cleaned"
+    fi
+
+    # Backward compatibility: clean legacy ui-tests directory if present
     if [ -d "ui-tests" ]; then
-        print_status "  Cleaning ui-tests directory..."
+        print_status "  Cleaning legacy ui-tests directory..."
         find ui-tests -name "*.log" -delete 2>/dev/null || true
         find ui-tests -name "*.tmp" -delete 2>/dev/null || true
         find ui-tests -name "*.cache" -delete 2>/dev/null || true
