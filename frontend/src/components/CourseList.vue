@@ -1,5 +1,10 @@
 <template>
   <div class="space-y-8" data-testid="course-list">
+    <!-- Debug Info -->
+    <div class="bg-blue-100 p-4 rounded-lg">
+      <p class="text-blue-800">Debug: Component loaded. Loading: {{ loading }}, Error: {{ error }}, Courses count: {{ courses.length }}</p>
+    </div>
+    
     <!-- Hero Section -->
     <div class="text-center space-y-4">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
@@ -114,15 +119,15 @@
             <div class="flex items-center space-x-2">
               <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
                 <span class="text-primary-600 font-semibold text-sm">
-                  {{ getInitials(course.teacher_name) }}
+                  {{ getInitials(course.instructor) }}
                 </span>
               </div>
               <button 
                 class="text-sm text-primary-600 hover:text-primary-700 font-medium"
                 data-testid="course-teacher"
-                @click.stop="viewTeacherProfile(course.teacher_id)"
+                @click.stop="showTeacherProfile(course.teacher_id)"
               >
-                {{ course.teacher_name }}
+                {{ course.instructor }}
               </button>
             </div>
             <div class="text-lg font-bold text-primary-600">
@@ -209,23 +214,35 @@ const filteredCourses = computed(() => {
   }
   
   const query = searchQuery.value.toLowerCase().trim();
-  return courses.value.filter(course => 
+  const filtered = courses.value.filter(course => 
     course.title.toLowerCase().includes(query) ||
     course.description.toLowerCase().includes(query) ||
     course.instructor.toLowerCase().includes(query) ||
     course.category.toLowerCase().includes(query)
   );
+  return filtered;
 });
 
 // Computed property for all courses count
 const allCourses = computed(() => courses.value);
 
+const getInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
+
 const loadCourses = async () => {
   try {
     loading.value = true;
     error.value = null;
-    courses.value = await courseApi.getActiveCourses();
+    const coursesData = await courseApi.getActiveCourses();
+    courses.value = coursesData;
   } catch (err) {
+    console.error('Error loading courses:', err);
     error.value = err instanceof Error ? err.message : 'Failed to load courses';
   } finally {
     loading.value = false;
