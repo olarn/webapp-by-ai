@@ -1,0 +1,29 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "description": "A full-stack web application for displaying and managing online courses, built with Vue.js frontend and Node.js/Express backend using functional programming principles.",
+  "main": "index.js",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:watch": "playwright test --ui --watch",
+    "test:e2e:chrome": "playwright test --project=chromium",
+    "test:e2e:firefox": "playwright test --project=firefox",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:e2e:mobile": "playwright test --project='Mobile Chrome' --project='Mobile Safari'",
+    "test:e2e:report": "playwright show-report",
+    "test:e2e:codegen": "playwright codegen",
+    "test:e2e:install": "playwright install",
+    "test:e2e:install-deps": "playwright install-deps"
+  },
+  "keywords": ["playwright", "e2e", "testing", "vue", "nodejs", "course-platform"],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.2.1"
+  }
+}

@@ -11,6 +11,7 @@ A full-stack web application for displaying and managing online courses, built w
 - **Modern UI**: Clean, Udemy-inspired design
 - **TypeScript**: Full type safety
 - **Unit Tests**: Jest testing framework
+- **E2E Tests**: Playwright end-to-end testing
 
 ### Backend (Node.js + Express + fp-ts)
 - **Functional Programming**: Built with fp-ts library
@@ -19,6 +20,7 @@ A full-stack web application for displaying and managing online courses, built w
 - **SQLite Database**: Lightweight database
 - **Error Handling**: Comprehensive error management
 - **Unit Tests**: Jest testing framework
+- **API Tests**: Playwright API testing
 
 ### Database
 - **SQLite**: File-based database
@@ -48,6 +50,7 @@ A full-stack web application for displaying and managing online courses, built w
 - Docker Compose
 - Multi-stage builds
 - Development and production ready
+- CI/CD with GitHub Actions
 
 ## Quick Start
 
@@ -204,14 +207,51 @@ Each course includes:
 - Professional instructor information
 - Realistic pricing
 
+## Testing
+
+### Unit Tests
+```bash
+# Backend unit tests
+cd backend && npm test
+
+# Frontend unit tests
+cd frontend && npm test
+```
+
+### End-to-End Tests (Playwright)
+```bash
+# Install Playwright browsers
+npm run test:e2e:install
+
+# Run all E2E tests
+npm run test:e2e
+
+# Run tests with UI mode (interactive)
+npm run test:e2e:ui
+
+# Run tests in headed mode (see browser)
+npm run test:e2e:headed
+
+# Run tests on specific browser
+npm run test:e2e:chrome
+npm run test:e2e:firefox
+npm run test:e2e:webkit
+
+# Show test report
+npm run test:e2e:report
+```
+
+For detailed E2E testing information, see [ui-tests/README.md](ui-tests/README.md).
+
 ## Development
 
 ### Adding New Features
 1. Create feature branch
 2. Implement backend API endpoints
 3. Add frontend components
-4. Write tests
-5. Update documentation
+4. Write unit tests
+5. Write E2E tests
+6. Update documentation
 
 ### Code Style
 - TypeScript strict mode enabled

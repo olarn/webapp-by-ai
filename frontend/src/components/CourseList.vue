@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8">
+  <div class="space-y-8" data-testid="course-list">
     <!-- Hero Section -->
     <div class="text-center space-y-4">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
@@ -11,6 +11,7 @@
       <div class="flex justify-center space-x-4">
         <router-link
           to="/teacher/login"
+          data-testid="teacher-login-link"
           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
           <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,6 +33,7 @@
         <input
           v-model="searchQuery"
           type="text"
+          data-testid="search-input"
           placeholder="Search courses by title, instructor, or category..."
           class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
           @input="handleSearch"
@@ -78,6 +80,7 @@
       <div 
         v-for="course in filteredCourses" 
         :key="course.id"
+        data-testid="course-card"
         class="card hover:shadow-lg transition-shadow duration-300 cursor-pointer"
         @click="navigateToCourse(course.id)"
       >
@@ -98,39 +101,41 @@
         </div>
 
         <!-- Course Content -->
-        <div class="p-6 space-y-4">
-          <h3 class="text-xl font-semibold text-gray-900 line-clamp-2">
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2" data-testid="course-title">
             {{ course.title }}
           </h3>
-          
-          <p class="text-gray-600 text-sm line-clamp-3">
+          <p class="text-gray-600 text-sm mb-4 line-clamp-3">
             {{ course.description }}
           </p>
-
-          <div class="flex items-center justify-between">
+          
+          <!-- Teacher Info -->
+          <div class="flex items-center justify-between mb-4">
             <div class="flex items-center space-x-2">
-              <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                <span class="text-gray-600 text-sm font-medium">
-                  {{ course.instructor.split(' ').map(n => n[0]).join('') }}
+              <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                <span class="text-primary-600 font-semibold text-sm">
+                  {{ getInitials(course.teacher_name) }}
                 </span>
               </div>
               <button 
-                @click.stop="showTeacherProfile(course.teacher_id)"
-                class="text-sm text-gray-600 hover:text-primary-600 transition-colors"
+                class="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                data-testid="course-teacher"
+                @click.stop="viewTeacherProfile(course.teacher_id)"
               >
-                {{ course.instructor }}
+                {{ course.teacher_name }}
               </button>
             </div>
-            
-            <div class="text-right">
-              <div class="text-2xl font-bold text-gray-900">
-                ${{ course.price }}
-              </div>
-              <div class="text-xs text-gray-500">USD</div>
+            <div class="text-lg font-bold text-primary-600">
+              ${{ course.price }} USD
             </div>
           </div>
-
-          <button class="w-full btn-primary">
+          
+          <!-- Action Button -->
+          <button 
+            class="w-full btn-primary"
+            data-testid="view-course-button"
+            @click.stop="navigateToCourse(course.id)"
+          >
             View Course
           </button>
         </div>

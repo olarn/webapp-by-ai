@@ -2,6 +2,7 @@
   "name": "course-platform-frontend",
   "version": "1.0.0",
   "description": "Frontend for course platform with Vue.js and Tailwind CSS",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
