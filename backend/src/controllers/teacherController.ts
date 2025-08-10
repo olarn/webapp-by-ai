@@ -27,10 +27,9 @@ const sendError = (res: Response, error: Error, statusCode: number = 500) => {
 
 const parseId = (id: string): E.Either<Error, number> => {
   const num = parseInt(id, 10);
-  if (isNaN(num) || num <= 0) {
-    return E.left(new Error('ID must be a positive number'));
-  }
-  return E.right(num);
+  return isNaN(num) || num <= 0
+    ? E.left(new Error('ID must be a positive number'))
+    : E.right(num);
 };
 
 export const createTeacherController = (
@@ -45,11 +44,9 @@ export const createTeacherController = (
 
     teacherService.register(validationResult.right)().then(
       (result) => {
-        if (result._tag === 'Left') {
-          sendError(res, result.left, 400);
-        } else {
-          sendResponse(res, result.right, 201);
-        }
+        result._tag === 'Left'
+          ? sendError(res, result.left, 400)
+          : sendResponse(res, result.right, 201);
       }
     );
   },
@@ -63,11 +60,9 @@ export const createTeacherController = (
 
     teacherService.login(validationResult.right)().then(
       (result) => {
-        if (result._tag === 'Left') {
-          sendError(res, result.left, 401);
-        } else {
-          sendResponse(res, result.right);
-        }
+        result._tag === 'Left'
+          ? sendError(res, result.left, 401)
+          : sendResponse(res, result.right);
       }
     );
   },
@@ -83,13 +78,13 @@ export const createTeacherController = (
       (result) => {
         if (result._tag === 'Left') {
           sendError(res, result.left, 400);
-        } else {
-          if (result.right._tag === 'None') {
-            sendError(res, new Error('Teacher not found'), 404);
-          } else {
-            sendResponse(res, result.right.value);
-          }
+          return;
         }
+        if (result.right._tag === 'None') {
+          sendError(res, new Error('Teacher not found'), 404);
+          return;
+        }
+        sendResponse(res, result.right.value);
       }
     );
   }

@@ -1,9 +1,5 @@
 <template>
   <div class="space-y-8" role="main" aria-label="Course Catalog">
-    <!-- Debug Info -->
-    <div class="bg-blue-100 p-4 rounded-lg" role="status" aria-live="polite">
-      <p class="text-blue-800">Debug: Component loaded. Loading: {{ loading }}, Error: {{ error }}, Courses count: {{ courses.length }}</p>
-    </div>
     
     <!-- Hero Section -->
     <section class="text-center space-y-4" role="banner">

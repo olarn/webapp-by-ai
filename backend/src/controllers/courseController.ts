@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
-import * as TE from 'fp-ts/TaskEither';
-import * as O from 'fp-ts/Option';
 import * as E from 'fp-ts/Either';
 import { CourseService } from '../services/courseService';
-import { CourseCreate, CourseCreateSchema, CourseUpdateSchema } from '../types/course';
+import { CourseCreateSchema, CourseUpdateSchema } from '../types/course';
 
 export interface CourseController {
   getAllCourses: (req: Request, res: Response) => void;
