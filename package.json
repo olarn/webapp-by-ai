@@ -13,6 +13,7 @@
     "test:e2e:watch": "playwright test --ui --watch",
     "test:ui:full": "node -e \"require('child_process').execSync(process.platform === 'win32' ? 'scripts\\\\run-ui-tests.bat' : './scripts/run-ui-tests.sh', {stdio: 'inherit'})\"",
     "test:ui": "node -e \"require('child_process').execSync(process.platform === 'win32' ? 'scripts\\\\run-ui-tests.bat' : './scripts/run-ui-tests.sh', {stdio: 'inherit'})\"",
+    "test:ui:interactive": "./scripts/run-ui-tests-ui.sh",
     "start:servers": "./scripts/start-servers.sh",
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "install:playwright": "playwright install chromium"
