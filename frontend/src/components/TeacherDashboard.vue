@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50" role="main" aria-label="Teacher course management dashboard">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
+    <header class="bg-white shadow-sm border-b border-gray-200" role="banner">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
@@ -12,6 +12,8 @@
             <span class="text-sm text-gray-600">Welcome, {{ teacher?.name }}</span>
             <button
               @click="handleLogout"
+              role="button"
+              aria-label="Logout from teacher account"
               class="text-sm text-red-600 hover:text-red-800"
             >
               Logout
@@ -24,12 +26,12 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Stats Section -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow p-6">
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" role="region" aria-label="Course statistics">
+        <div class="bg-white rounded-lg shadow p-6" role="article" aria-label="Total courses count">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
               </div>
@@ -41,11 +43,11 @@
           </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
+        <div class="bg-white rounded-lg shadow p-6" role="article" aria-label="Active courses count">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
@@ -57,11 +59,11 @@
           </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
+        <div class="bg-white rounded-lg shadow p-6" role="article" aria-label="Disabled courses count">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-yellow-100 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
@@ -72,17 +74,17 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <!-- Search and Actions -->
-      <div class="bg-white rounded-lg shadow mb-6">
+      <section class="bg-white rounded-lg shadow mb-6" role="search" aria-label="Course search and management">
         <div class="p-6 border-b border-gray-200">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <div class="flex-1 max-w-lg">
               <label for="search" class="sr-only">Search courses</label>
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                   </svg>
                 </div>
@@ -91,6 +93,8 @@
                   v-model="searchKeyword"
                   @input="handleSearch"
                   type="text"
+                  role="searchbox"
+                  aria-label="Search teacher courses"
                   class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                   placeholder="Search your courses..."
                 />
@@ -99,9 +103,11 @@
             <div class="flex space-x-3">
               <button
                 @click="showCreateModal = true"
+                role="button"
+                aria-label="Create new course"
                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
                 Create Course
@@ -109,18 +115,20 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <!-- Loading State -->
-      <div v-if="loading" class="flex justify-center items-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div v-if="loading" class="flex justify-center items-center py-12" role="status" aria-live="polite" aria-label="Loading courses">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600" aria-hidden="true"></div>
       </div>
 
       <!-- Error State -->
-      <div v-else-if="error" class="text-center py-12">
+      <div v-else-if="error" class="text-center py-12" role="alert" aria-live="assertive">
         <div class="text-red-600 text-lg font-medium">{{ error }}</div>
         <button 
           @click="loadCourses" 
+          role="button"
+          aria-label="Retry loading courses"
           class="mt-4 btn-primary"
         >
           Try Again
@@ -128,17 +136,19 @@
       </div>
 
       <!-- Course Grid -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div 
+      <section v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="grid" aria-label="Teacher course list">
+        <article 
           v-for="course in filteredCourses" 
           :key="course.id"
+          role="gridcell"
+          :aria-label="`Course: ${course.title} - ${course.status} status`"
           class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
         >
           <!-- Course Image -->
           <div class="aspect-video bg-gray-200 relative overflow-hidden">
             <img 
               :src="getImageUrl(course.image_url)" 
-              :alt="course.title"
+              :alt="`Course image for ${course.title}`"
               class="w-full h-full object-cover"
               @error="handleImageError"
             />
@@ -150,6 +160,7 @@
                     ? 'bg-green-100 text-green-800' 
                     : 'bg-red-100 text-red-800'
                 ]"
+                :aria-label="`Course status: ${course.status}`"
               >
                 {{ course.status }}
               </span>
@@ -167,7 +178,7 @@
             </p>
 
             <div class="flex items-center justify-between">
-              <div class="text-2xl font-bold text-gray-900">
+              <div class="text-2xl font-bold text-gray-900" aria-label="Course price">
                 ${{ course.price }}
               </div>
               <div class="text-sm text-gray-500">{{ course.category }}</div>
@@ -177,12 +188,16 @@
             <div class="flex space-x-2">
               <button
                 @click="editCourse(course)"
+                role="button"
+                :aria-label="`Edit course: ${course.title}`"
                 class="flex-1 bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 Edit
               </button>
               <button
                 @click="toggleCourseStatus(course)"
+                role="button"
+                :aria-label="`${course.status === 'active' ? 'Disable' : 'Enable'} course: ${course.title}`"
                 :class="[
                   'flex-1 px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2',
                   course.status === 'active'
@@ -194,14 +209,16 @@
               </button>
               <button
                 @click="deleteCourse(course.id)"
+                role="button"
+                :aria-label="`Delete course: ${course.title}`"
                 class="flex-1 bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 Delete
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </article>
+      </section>
 
       <!-- Empty State -->
       <div v-if="!loading && !error && filteredCourses.length === 0" class="text-center py-12">

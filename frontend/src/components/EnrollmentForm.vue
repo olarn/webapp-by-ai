@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" aria-label="Course enrollment form">
     <div class="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
       <!-- Header -->
       <div class="p-6 border-b border-gray-200">
@@ -7,9 +7,11 @@
           <h2 class="text-2xl font-bold text-gray-900">Enroll in Course</h2>
           <button 
             @click="$emit('close')" 
+            role="button"
+            aria-label="Close enrollment form"
             class="text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
@@ -18,10 +20,10 @@
       </div>
 
       <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="p-6 space-y-6">
+      <form @submit.prevent="handleSubmit" class="p-6 space-y-6" role="form" aria-label="Student enrollment information">
         <!-- Personal Information -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-semibold text-gray-900">Personal Information</h3>
+        <section class="space-y-4" role="group" aria-labelledby="personal-info-heading">
+          <h3 id="personal-info-heading" class="text-lg font-semibold text-gray-900">Personal Information</h3>
           
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -33,10 +35,15 @@
                 v-model="form.firstName"
                 type="text"
                 required
+                role="textbox"
+                aria-label="Student first name"
+                aria-required="true"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 :class="{ 'border-red-500': errors.firstName }"
+                :aria-invalid="!!errors.firstName"
+                :aria-describedby="errors.firstName ? 'firstName-error' : undefined"
               />
-              <p v-if="errors.firstName" class="text-red-500 text-sm mt-1">{{ errors.firstName }}</p>
+              <p v-if="errors.firstName" id="firstName-error" class="text-red-500 text-sm mt-1" role="alert">{{ errors.firstName }}</p>
             </div>
             
             <div>
@@ -48,10 +55,15 @@
                 v-model="form.lastName"
                 type="text"
                 required
+                role="textbox"
+                aria-label="Student last name"
+                aria-required="true"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 :class="{ 'border-red-500': errors.lastName }"
+                :aria-invalid="!!errors.lastName"
+                :aria-describedby="errors.lastName ? 'lastName-error' : undefined"
               />
-              <p v-if="errors.lastName" class="text-red-500 text-sm mt-1">{{ errors.lastName }}</p>
+              <p v-if="errors.lastName" id="lastName-error" class="text-red-500 text-sm mt-1" role="alert">{{ errors.lastName }}</p>
             </div>
           </div>
 
@@ -64,10 +76,15 @@
               v-model="form.email"
               type="email"
               required
+              role="textbox"
+              aria-label="Student email address"
+              aria-required="true"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               :class="{ 'border-red-500': errors.email }"
+              :aria-invalid="!!errors.email"
+              :aria-describedby="errors.email ? 'email-error' : undefined"
             />
-            <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
+            <p v-if="errors.email" id="email-error" class="text-red-500 text-sm mt-1" role="alert">{{ errors.email }}</p>
           </div>
 
           <div>
@@ -78,6 +95,8 @@
               id="phone"
               v-model="form.phone"
               type="tel"
+              role="textbox"
+              aria-label="Student phone number"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             />
           </div>
@@ -90,14 +109,16 @@
               id="company"
               v-model="form.company"
               type="text"
+              role="textbox"
+              aria-label="Student company or organization"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             />
           </div>
-        </div>
+        </section>
 
         <!-- Course Summary -->
-        <div class="bg-gray-50 rounded-lg p-4">
-          <h3 class="text-lg font-semibold text-gray-900 mb-3">Course Summary</h3>
+        <section class="bg-gray-50 rounded-lg p-4" role="group" aria-labelledby="course-summary-heading">
+          <h3 id="course-summary-heading" class="text-lg font-semibold text-gray-900 mb-3">Course Summary</h3>
           <div class="space-y-2">
             <div class="flex justify-between">
               <span class="text-gray-600">Course:</span>
@@ -109,10 +130,10 @@
             </div>
             <div class="flex justify-between">
               <span class="text-gray-600">Price:</span>
-              <span class="font-bold text-lg text-primary-600">${{ course?.price }}</span>
+              <span class="font-bold text-lg text-primary-600" aria-label="Course price">${{ course?.price }}</span>
             </div>
           </div>
-        </div>
+        </section>
 
         <!-- Terms and Conditions -->
         <div class="flex items-start space-x-3">
@@ -121,6 +142,9 @@
             v-model="form.agreeToTerms"
             type="checkbox"
             required
+            role="checkbox"
+            aria-label="Agree to terms and conditions"
+            aria-required="true"
             class="mt-1 h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
           />
           <label for="terms" class="text-sm text-gray-700">
@@ -136,6 +160,8 @@
           <button
             type="button"
             @click="$emit('close')"
+            role="button"
+            aria-label="Cancel enrollment"
             class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
           >
             Cancel
@@ -143,9 +169,11 @@
           <button
             type="submit"
             :disabled="loading"
+            role="button"
+            :aria-label="loading ? 'Processing enrollment...' : 'Proceed to payment for course enrollment'"
             class="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span v-if="loading" class="flex items-center justify-center">
+            <span v-if="loading" class="flex items-center justify-center" aria-hidden="true">
               <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -187,7 +215,7 @@ interface FormErrors {
 const props = defineProps<Props>();
 const emit = defineEmits<{
   close: [];
-  proceedToPayment: [enrollmentData: EnrollmentForm & { courseId: number }];
+  proceedToPayment: [enrollmentData: EnrollmentForm & { courseId: number; enrollmentId?: number }];
 }>();
 
 const loading = ref(false);

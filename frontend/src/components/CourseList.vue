@@ -1,12 +1,12 @@
 <template>
-  <div class="space-y-8" data-testid="course-list">
+  <div class="space-y-8" role="main" aria-label="Course Catalog">
     <!-- Debug Info -->
-    <div class="bg-blue-100 p-4 rounded-lg">
+    <div class="bg-blue-100 p-4 rounded-lg" role="status" aria-live="polite">
       <p class="text-blue-800">Debug: Component loaded. Loading: {{ loading }}, Error: {{ error }}, Courses count: {{ courses.length }}</p>
     </div>
     
     <!-- Hero Section -->
-    <div class="text-center space-y-4">
+    <section class="text-center space-y-4" role="banner">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
         Discover Amazing Courses
       </h1>
@@ -16,29 +16,31 @@
       <div class="flex justify-center space-x-4">
         <router-link
           to="/teacher/login"
-          data-testid="teacher-login-link"
+          role="button"
+          aria-label="Access teacher login page"
           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
           </svg>
           Teacher Login
         </router-link>
       </div>
-    </div>
+    </section>
 
     <!-- Search Section -->
-    <div class="max-w-2xl mx-auto">
+    <section class="max-w-2xl mx-auto" role="search" aria-label="Search courses">
       <div class="relative">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
         <input
           v-model="searchQuery"
           type="text"
-          data-testid="search-input"
+          role="searchbox"
+          aria-label="Search courses by title, instructor, or category"
           placeholder="Search courses by title, instructor, or category..."
           class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
           @input="handleSearch"
@@ -46,9 +48,11 @@
         <div v-if="searchQuery" class="absolute inset-y-0 right-0 pr-3 flex items-center">
           <button
             @click="clearSearch"
+            role="button"
+            aria-label="Clear search"
             class="text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
           >
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -56,24 +60,26 @@
       </div>
       
       <!-- Search Results Info -->
-      <div v-if="searchQuery" class="mt-4 text-center">
+      <div v-if="searchQuery" class="mt-4 text-center" role="status" aria-live="polite">
         <p class="text-sm text-gray-600">
           Showing {{ filteredCourses.length }} of {{ allCourses.length }} courses
           <span v-if="searchQuery">for "{{ searchQuery }}"</span>
         </p>
       </div>
-    </div>
+    </section>
 
     <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center items-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+    <div v-if="loading" class="flex justify-center items-center py-12" role="status" aria-live="polite" aria-label="Loading courses">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600" aria-hidden="true"></div>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12">
+    <div v-else-if="error" class="text-center py-12" role="alert" aria-live="assertive">
       <div class="text-red-600 text-lg font-medium">{{ error }}</div>
       <button 
         @click="loadCourses" 
+        role="button"
+        aria-label="Retry loading courses"
         class="mt-4 btn-primary"
       >
         Try Again
@@ -81,11 +87,12 @@
     </div>
 
     <!-- Course Grid -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div 
+    <section v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="grid" aria-label="Available courses">
+      <article 
         v-for="course in filteredCourses" 
         :key="course.id"
-        data-testid="course-card"
+        role="gridcell"
+        :aria-label="`Course: ${course.title} by ${course.instructor}`"
         class="card hover:shadow-lg transition-shadow duration-300 cursor-pointer"
         @click="navigateToCourse(course.id)"
       >
@@ -93,7 +100,7 @@
         <div class="aspect-video bg-gray-200 relative overflow-hidden">
           <img 
             :src="getImageUrl(course.image_url)" 
-            :alt="course.title"
+            :alt="`Course image for ${course.title}`"
             class="w-full h-full object-cover"
             @error="handleImageError"
             @load="loadImageWithCache(getImageUrl(course.image_url))"
@@ -107,7 +114,7 @@
 
         <!-- Course Content -->
         <div class="p-6">
-          <h3 class="text-lg font-semibold text-gray-900 mb-2" data-testid="course-title">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
             {{ course.title }}
           </h3>
           <p class="text-gray-600 text-sm mb-4 line-clamp-3">
@@ -124,13 +131,14 @@
               </div>
               <button 
                 class="text-sm text-primary-600 hover:text-primary-700 font-medium"
-                data-testid="course-teacher"
+                role="button"
+                :aria-label="`View profile of ${course.instructor}`"
                 @click.stop="showTeacherProfile(course.teacher_id)"
               >
                 {{ course.instructor }}
               </button>
             </div>
-            <div class="text-lg font-bold text-primary-600">
+            <div class="text-lg font-bold text-primary-600" aria-label="Course price">
               ${{ course.price }} USD
             </div>
           </div>
@@ -138,17 +146,18 @@
           <!-- Action Button -->
           <button 
             class="w-full btn-primary"
-            data-testid="view-course-button"
+            role="button"
+            :aria-label="`View details for ${course.title} course`"
             @click.stop="navigateToCourse(course.id)"
           >
             View Course
           </button>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
 
     <!-- Empty State -->
-    <div v-if="!loading && !error && filteredCourses.length === 0" class="text-center py-12">
+    <div v-if="!loading && !error && filteredCourses.length === 0" class="text-center py-12" role="status" aria-live="polite">
       <div v-if="searchQuery" class="text-gray-500 text-lg">
         No courses found matching "{{ searchQuery }}". Try a different search term.
       </div>
@@ -156,16 +165,18 @@
     </div>
 
     <!-- Teacher Profile Modal -->
-    <div v-if="showTeacherModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div v-if="showTeacherModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-label="Teacher profile">
       <div class="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div class="p-6">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-semibold text-gray-900">Teacher Profile</h3>
             <button 
               @click="closeTeacherModal"
+              role="button"
+              aria-label="Close teacher profile"
               class="text-gray-400 hover:text-gray-600"
             >
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -175,8 +186,8 @@
             <TeacherProfile :teacher="selectedTeacher" />
           </div>
           
-          <div v-else-if="teacherLoading" class="flex justify-center py-8">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+          <div v-else-if="teacherLoading" class="flex justify-center py-8" role="status" aria-live="polite">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" aria-hidden="true"></div>
           </div>
           
           <div v-else class="text-center py-8 text-gray-500">

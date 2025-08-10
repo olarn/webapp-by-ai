@@ -1,4 +1,4 @@
-import { Page, APIRequestContext } from '@playwright/test';
+import { Page, APIRequestContext, expect } from '@playwright/test';
 
 export interface TestUser {
   email: string;
@@ -259,14 +259,14 @@ export class TestHelpers {
   static async createCourseUI(page: Page, courseData: Partial<TestCourse>): Promise<string> {
     await page.locator('[data-testid="create-course-button"]').click();
     await expect(page.locator('[data-testid="create-course-form"]')).toBeVisible();
-    
+
     const title = courseData.title || `Test Course ${Date.now()}`;
     await page.locator('[data-testid="course-title-input"]').fill(title);
     await page.locator('[data-testid="course-description-input"]').fill(courseData.description || 'Test course description');
     await page.locator('[data-testid="course-price-input"]').fill(courseData.price?.toString() || '99.99');
     await page.locator('[data-testid="course-category-select"]').selectOption(courseData.category || 'web-development');
     await page.locator('[data-testid="submit-course-button"]').click();
-    
+
     await expect(page.locator('[data-testid="course-created-success"]')).toBeVisible();
     return title;
   }
@@ -277,7 +277,7 @@ export class TestHelpers {
   static async enrollInCourseUI(page: Page, studentData: Partial<TestEnrollment>): Promise<void> {
     await page.locator('[data-testid="enroll-button"]').click();
     await expect(page.locator('[data-testid="enrollment-form"]')).toBeVisible();
-    
+
     await page.locator('[data-testid="student-name"]').fill(studentData.studentName || 'Test Student');
     await page.locator('[data-testid="student-email"]').fill(studentData.studentEmail || 'test@example.com');
     await page.locator('[data-testid="student-phone"]').fill(studentData.studentPhone || '+1234567890');

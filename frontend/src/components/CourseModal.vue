@@ -1,16 +1,16 @@
 <template>
-  <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto">
+  <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true" :aria-label="isEditing ? 'Edit Course Form' : 'Create Course Form'">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <!-- Background overlay -->
-      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="close"></div>
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="close" role="presentation"></div>
 
       <!-- Modal panel -->
       <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="handleSubmit" role="form" aria-label="Course information form">
           <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
               <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-primary-100 sm:mx-0 sm:h-10 sm:w-10">
-                <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
               </div>
@@ -27,6 +27,8 @@
                       v-model="form.title"
                       type="text"
                       required
+                      role="textbox"
+                      aria-label="Course title"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                       placeholder="e.g., Advanced Functional Programming with TypeScript"
                     />
@@ -40,6 +42,8 @@
                       v-model="form.description"
                       rows="3"
                       required
+                      role="textbox"
+                      aria-label="Course description"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                       placeholder="e.g., Master functional programming concepts with TypeScript. Learn monads, functors, and advanced patterns for building robust applications."
                     ></textarea>
@@ -53,6 +57,8 @@
                       v-model="form.image_url"
                       type="url"
                       required
+                      role="textbox"
+                      aria-label="Course image URL"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                       placeholder="e.g., https://example.com/course-image.jpg or /images/fp-course.svg"
                     />
@@ -66,6 +72,8 @@
                       v-model="form.instructor"
                       type="text"
                       required
+                      role="textbox"
+                      aria-label="Course instructor name"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                       placeholder="e.g., Dr. John Smith"
                     />
@@ -81,6 +89,8 @@
                       min="0"
                       step="0.01"
                       required
+                      role="spinbutton"
+                      aria-label="Course price in USD"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                       placeholder="e.g., 99.99"
                     />
@@ -93,6 +103,8 @@
                       id="category"
                       v-model="form.category"
                       required
+                      role="combobox"
+                      aria-label="Course category selection"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
                     >
                       <option value="">Select a category</option>
@@ -112,6 +124,8 @@
                       id="status"
                       v-model="form.status"
                       required
+                      role="combobox"
+                      aria-label="Course status selection"
                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                     >
                       <option value="active">Active</option>
@@ -127,9 +141,11 @@
             <button
               type="submit"
               :disabled="loading"
+              role="button"
+              :aria-label="loading ? 'Saving course...' : (isEditing ? 'Update course information' : 'Create new course')"
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span v-if="loading" class="mr-2">
+              <span v-if="loading" class="mr-2" aria-hidden="true">
                 <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -140,6 +156,8 @@
             <button
               type="button"
               @click="close"
+              role="button"
+              aria-label="Cancel course creation/editing"
               class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Cancel
