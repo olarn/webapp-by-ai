@@ -2,10 +2,11 @@
   1.1 Graph show number of new classes each month, back 3 months.
   1.2 Graph show total income each month, back 3 months.
   1.3 Graph show number of students enroll but still pending to pay.
-2. As a web admin. I want be able to click on the graph. So that I can see data in details (transaction) based on the graph. 
-3. As a web admin. I can logout.
-4. As a web admin. I want to use the existing login page. So that the web app will navigate to admin dashboard based if user is admin. Otherwise, it should navigate to teacher page if user is teacher.
-5. As a web admin. I want teacher management page that I can navigate from dashboard by menu on the nav bar, which only admin can see.
-6. As a web admin. I want to create new teacher, edit existing teacher.
-7. As a web admin. I want to disable teacher account. So that teacher cannot login, and also the disabled teacher's course should disappear from home screen.
-8. As a web admin. I want to enable teacher account that disabled. So that teacher can login, and the course should re-appear on the home screen.
+2. As a web admin. I want admin menu on nav bar. So that I can navigate to admin login page if I'm not logged in yet. Otherwise, it will navigate to admin dashboard if logged in.
+3. As a web admin. I want be able to click on the graph. So that I can see data in details (transaction) based on the graph. 
+4. As a web admin. I can logout.
+5. As a web admin. I want to use the existing login page. So that the web app will navigate to admin dashboard based if user is admin. Otherwise, it should navigate to teacher page if user is teacher.
+6. As a web admin. I want teacher management page that I can navigate from dashboard by menu on the nav bar, which only admin can see.
+7. As a web admin. I want to create new teacher, edit existing teacher.
+8. As a web admin. I want to disable teacher account. So that teacher cannot login, and also the disabled teacher's course should disappear from home screen.
+9. As a web admin. I want to enable teacher account that disabled. So that teacher can login, and the course should re-appear on the home screen.
