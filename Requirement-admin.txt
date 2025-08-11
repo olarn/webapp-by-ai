@@ -6,7 +6,7 @@
   1.5 The layout of chart should flow from top page to bottom. The graph is on the left and details are on the right. And support responsive web. 
 2. As a web admin. I want admin menu on nav bar. So that I can navigate to admin login page if I'm not logged in yet. Otherwise, it will navigate to admin dashboard if logged in.
 3. As a web admin. I want be able to click on the graph. So that I can see data in details (transaction) based on the graph. 
-4. As a web admin. I can logout.
+4. As a web admin. I can logout. So that when user navigate to the dashboard without login as admin, page should show admin login page.
 5. As a web admin. I want to use the existing login page. So that the web app will navigate to admin dashboard based if user is admin. Otherwise, it should navigate to teacher page if user is teacher.
 6. As a web admin. I want teacher management page that I can navigate from dashboard by menu on the nav bar, which only admin can see.
 7. As a web admin. I want to create new teacher, edit existing teacher.

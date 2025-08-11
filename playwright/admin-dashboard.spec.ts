@@ -24,9 +24,11 @@ test.describe('Admin Dashboard Analytics', () => {
     expect(await classBars.count()).toBeGreaterThan(0);
     expect(await incomeBars.count()).toBeGreaterThan(0);
     const firstClassBarTitle = await classBars.first().getAttribute('title');
-    expect(Number(firstClassBarTitle || '0')).not.toBeNaN();
+    expect(firstClassBarTitle).toBeTruthy();
+    expect(firstClassBarTitle as string).toMatch(/\d/); // contains a number
     const firstIncomeBarTitle = await incomeBars.first().getAttribute('title');
-    expect(Number(firstIncomeBarTitle || '0')).not.toBeNaN();
+    expect(firstIncomeBarTitle).toBeTruthy();
+    expect(firstIncomeBarTitle as string).toMatch(/\d/);
 
     // Pie chart exists (svg)
     const pie = page.locator('section:has-text("Enrollments Status") svg');
