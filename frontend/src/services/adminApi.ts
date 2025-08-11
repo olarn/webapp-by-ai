@@ -5,6 +5,11 @@ export interface AdminOverview {
   newClassesPerMonth: number[];
   incomePerMonth: number[];
   pendingEnrollments: number;
+  enrollmentStatusCounts: {
+    pending: number;
+    confirmed: number;
+    cancelled: number;
+  };
 }
 
 export interface AdminUser {

@@ -7,6 +7,11 @@ export interface AdminOverviewStats {
   newClassesPerMonth: number[];
   incomePerMonth: number[];
   pendingEnrollments: number;
+  enrollmentStatusCounts: {
+    pending: number;
+    confirmed: number;
+    cancelled: number;
+  };
 }
 
 export class AdminService {
@@ -55,6 +60,10 @@ export class AdminService {
           `SELECT COUNT(*) AS pending FROM enrollments WHERE status = 'pending'`
         );
 
+        const statusRows = await this.all(
+          `SELECT status, COUNT(*) AS cnt FROM enrollments GROUP BY status`
+        );
+
         const classesMap = new Map<string, number>();
         for (const r of classesRows as Array<{ ym: string; count: number }>) {
           classesMap.set(r.ym, Number(r.count));
@@ -69,11 +78,21 @@ export class AdminService {
         const incomePerMonth = labels.map((l) => incomeMap.get(l) || 0);
         const pendingEnrollments = Number((pendingRow as any)?.pending || 0);
 
+        const statusMap = new Map<string, number>();
+        for (const r of statusRows as Array<{ status: string; cnt: number }>) {
+          statusMap.set(r.status, Number(r.cnt || 0));
+        }
+
         return {
           months: labels,
           newClassesPerMonth,
           incomePerMonth,
           pendingEnrollments,
+          enrollmentStatusCounts: {
+            pending: statusMap.get('pending') || 0,
+            confirmed: statusMap.get('confirmed') || 0,
+            cancelled: statusMap.get('cancelled') || 0
+          },
         };
       },
       (error) => new Error(`Failed to get admin overview stats: ${error}`)
