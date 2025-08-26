@@ -1,6 +1,12 @@
 1. Read provided requirement and in struction (this file).
-2. Add requested features. Refactor code and/or restructure database if needed.
-3. Test server (node) and client (Vue).
-4. Add UI tests to cover happy path features. No smoke test. 
-5. Run UI automate test to make sure everything passed.
-6. Update all scripts.
+2. Use Test-Driven Development approach. Follow what AI thinks in the implementation process.
+  2.1 Write unit tests that cover scenario from the requirement first. 
+  2.2 Implement code that pass the unit tests.
+  2.3 Refactor code that needed to easier to add the future requirements.
+  2.4 The code coverage should cover 100% business logic. 
+  2.5 Overall code coverage should not less than 80%.
+3. Add requested features. Refactor code and/or restructure database if needed.
+4. Test server (node) and client (Vue).
+5. Add UI tests to cover happy path features. No smoke test. 
+6. Run UI automate test to make sure everything passed.
+7. Update all scripts, readme.

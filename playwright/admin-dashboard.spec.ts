@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Admin Dashboard Analytics', () => {
   test('shows bar charts, pie chart with hover tooltips and details', async ({ page }) => {
     // Go to admin login
-    await page.goto('http://localhost:5173/admin/login');
+    await page.goto('/admin/login');
 
     // Login using seeded creds
     await page.getByLabel('Username').fill('admin');

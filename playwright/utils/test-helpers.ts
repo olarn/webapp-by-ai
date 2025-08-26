@@ -22,8 +22,8 @@ export interface TestEnrollment {
 }
 
 export class TestHelpers {
-  private static readonly baseURL = 'http://localhost:3000';
-  private static readonly frontendURL = 'http://localhost:5173';
+  private static readonly baseURL = process.env.PLAYWRIGHT_API_BASE || 'http://localhost:8000';
+  private static readonly frontendURL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5173';
 
   /**
    * Login as a teacher and return authentication token
@@ -125,7 +125,7 @@ export class TestHelpers {
    * Navigate to course details page
    */
   static async navigateToCourseDetails(page: Page, courseId: number): Promise<void> {
-    await page.goto(`${this.frontendURL}/course/${courseId}`);
+    await page.goto(`/course/${courseId}`);
     await this.waitForPageReady(page);
   }
 
@@ -133,7 +133,7 @@ export class TestHelpers {
    * Navigate to teacher dashboard
    */
   static async navigateToTeacherDashboard(page: Page): Promise<void> {
-    await page.goto(`${this.frontendURL}/teacher/dashboard`);
+    await page.goto(`/teacher/dashboard`);
     await this.waitForPageReady(page);
   }
 
