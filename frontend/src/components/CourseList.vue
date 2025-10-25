@@ -89,7 +89,7 @@
         :key="course.id"
         role="gridcell"
         :aria-label="`Course: ${course.title} by ${course.instructor}`"
-        class="card hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+        class="card hover:shadow-lg transition-shadow duration-300 cursor-pointer flex flex-col"
         @click="navigateToCourse(course.id)"
       >
         <!-- Course Image -->
@@ -109,7 +109,7 @@
         </div>
 
         <!-- Course Content -->
-        <div class="p-6">
+        <div class="p-6 flex flex-col flex-grow">
           <h3 class="text-lg font-semibold text-gray-900 mb-2">
             {{ course.title }}
           </h3>
@@ -141,7 +141,7 @@
           
           <!-- Action Button -->
           <button 
-            class="w-full btn-primary"
+            class="w-full btn-primary mt-auto"
             role="button"
             :aria-label="`View details for ${course.title} course`"
             @click.stop="navigateToCourse(course.id)"
