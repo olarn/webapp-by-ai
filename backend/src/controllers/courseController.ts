@@ -46,17 +46,61 @@ const getTeacherIdFromRequest = (req: Request): E.Either<Error, number> => {
   return parseId(teacherId.toString());
 };
 
+type UpdateCourseHandler = {
+  run: () => void;
+};
+
+const createUpdateCourseHandler = (
+  courseService: CourseService,
+  req: Request,
+  res: Response
+): UpdateCourseHandler => {
+  return {
+    run: () => {
+      const idResult = parseId(req.params.id);
+      if (idResult._tag === 'Left') {
+        sendError(res, idResult.left, 400);
+        return;
+      }
+
+      const teacherIdResult = getTeacherIdFromRequest(req);
+      if (teacherIdResult._tag === 'Left') {
+        sendError(res, teacherIdResult.left, 400);
+        return;
+      }
+
+      const validationResult = CourseUpdateSchema.decode(req.body);
+      if (validationResult._tag === 'Left') {
+        sendError(res, new Error(`Validation errors: ${JSON.stringify(validationResult.left)}`), 400);
+        return;
+      }
+
+      courseService.updateCourse(idResult.right, teacherIdResult.right, validationResult.right)().then(
+        (result) => {
+          if (result._tag === 'Left') {
+            sendError(res, result.left, 400);
+          } else {
+            if (result.right._tag === 'None') {
+              sendError(res, new Error('Course not found or access denied'), 404);
+            } else {
+              sendResponse(res, result.right.value);
+            }
+          }
+        }
+      );
+    }
+  };
+};
+
 export const createCourseController = (
   courseService: CourseService
 ): CourseController => ({
   getAllCourses: (req: Request, res: Response) => {
     courseService.getAllCourses()().then(
       (result) => {
-        if (result._tag === 'Left') {
-          sendError(res, result.left, 500);
-        } else {
-          sendResponse(res, result.right);
-        }
+        return (result._tag === 'Left') ?
+          sendError(res, result.left, 500) :
+          sendResponse(res, result.right)
       }
     );
   },
@@ -156,37 +200,7 @@ export const createCourseController = (
   },
 
   updateCourse: (req: Request, res: Response) => {
-    const idResult = parseId(req.params.id);
-    if (idResult._tag === 'Left') {
-      sendError(res, idResult.left, 400);
-      return;
-    }
-
-    const teacherIdResult = getTeacherIdFromRequest(req);
-    if (teacherIdResult._tag === 'Left') {
-      sendError(res, teacherIdResult.left, 400);
-      return;
-    }
-
-    const validationResult = CourseUpdateSchema.decode(req.body);
-    if (validationResult._tag === 'Left') {
-      sendError(res, new Error(`Validation errors: ${JSON.stringify(validationResult.left)}`), 400);
-      return;
-    }
-
-    courseService.updateCourse(idResult.right, teacherIdResult.right, validationResult.right)().then(
-      (result) => {
-        if (result._tag === 'Left') {
-          sendError(res, result.left, 400);
-        } else {
-          if (result.right._tag === 'None') {
-            sendError(res, new Error('Course not found or access denied'), 404);
-          } else {
-            sendResponse(res, result.right.value);
-          }
-        }
-      }
-    );
+    createUpdateCourseHandler(courseService, req, res).run();
   },
 
   updateCourseStatus: (req: Request, res: Response) => {

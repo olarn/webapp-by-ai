@@ -3,17 +3,17 @@ import * as O from 'fp-ts/Option';
 import { Database } from 'sqlite3';
 import { promisify } from 'util';
 import type { Admin } from '../types/admin';
-
+import type { UserName } from '../controllers/adminAuthController';
 export class AdminRepository {
   constructor(private db: Database) { }
 
   private get = promisify(this.db.get.bind(this.db)) as any;
   private run = promisify(this.db.run.bind(this.db)) as any;
 
-  findByUsername = (username: string): TE.TaskEither<Error, O.Option<Admin>> =>
+  findByUsername = (username: UserName): TE.TaskEither<Error, O.Option<Admin>> =>
     TE.tryCatch(
       async () => {
-        const row = await this.get('SELECT * FROM admins WHERE username = ?', [username]);
+        const row = await this.get('SELECT * FROM admins WHERE username = ?', [username.value]);
         return row ? O.some(row as Admin) : O.none;
       },
       (error) => new Error(`Failed to find admin by username: ${error}`)
